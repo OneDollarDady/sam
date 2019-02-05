@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>SAM ROLLER DERBY</title>
+    <style>
+    	img { padding: 100; margin: 100; }
+		aside { 
+			position:  absolute;
+			top: 350px; 
+			width: 20px;height: 20px;
+			padding: 6px;
+			background-image: url('bluejam.jpg');
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+    </style>
+</head>
+<body>
+	<!--blue team-->
+	<aside style="left:250px;background-image: url('bluejam.jpg');" draggable="true" id="d1">
+	</aside>
+	<aside style="left:285px;background-image: url('bluepivot.jpg');" draggable="true" id="d2">
+	</aside>
+	<aside style="left:320px;background-image: url('blue.jpg');" draggable="true" id="d3">
+	</aside>
+	<aside style="left:355px;background-image: url('blue.jpg');" draggable="true" id="d4">
+	</aside>
+	<aside style="left:390px;background-image: url('blue.jpg');" draggable="true" id="d5">
+	</aside>
+	<!--red team-->
+	<aside style="left:450px;background-image: url('redjam.jpg');" draggable="true" id="d6">
+	</aside>
+	<aside style="left:485px;background-image: url('redpivot.jpg');" draggable="true" id="d7">
+	</aside>
+	<aside style="left:520px;background-image: url('red.jpg');" draggable="true" id="d8">
+	</aside>
+	<aside style="left:555px;background-image: url('red.jpg');" draggable="true" id="d9">
+	</aside>
+	<aside style="left:590px;background-image: url('red.jpg');" draggable="true" id="d0">
+	</aside>
+	<!--track-->
+	<img src="track.gif" />
+
+<script>
+	var temp;
+	function drag_start(event) {
+		var style = window.getComputedStyle(event.target, null);
+		temp=this;
+		event.dataTransfer.setData("text/plain",
+		(parseInt(style.getPropertyValue("left"),10) - event.clientX) + ',' + (parseInt(style.getPropertyValue("top"),10) - event.clientY));
+	} 
+	function drag_over(event) { 
+		event.preventDefault(); 
+		return false; 
+	} 
+	function drop(event) { 
+		var offset = event.dataTransfer.getData("text/plain").split(',');
+		var dm = temp;
+		dm.style.left = (event.clientX + parseInt(offset[0],10)) + 'px';
+		dm.style.top = (event.clientY + parseInt(offset[1],10)) + 'px';
+		event.preventDefault();
+		return false;
+	} 
+	var dm;
+	for(var i = 0;i<10;i++){
+		dm = document.getElementById('d'+i);		
+		dm.addEventListener('dragstart',drag_start,false);
+	}
+	document.body.addEventListener('dragover',drag_over,false); 
+	document.body.addEventListener('drop',drop,false); 
+</script>
+
+</body>
+</html>
